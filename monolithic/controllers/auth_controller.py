@@ -4,7 +4,7 @@ from extensions import db
 from flask_login import login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
-auth = Blueprint('auth', __name__)
+auth = Blueprint('auth', __name__, url_prefix='/objective-1')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

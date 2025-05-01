@@ -24,7 +24,7 @@ from controllers.admin_controller import admin
 
 # Registrar blueprints
 app.register_blueprint(auth)
-app.register_blueprint(book, url_prefix='/book')
+app.register_blueprint(book)
 app.register_blueprint(purchase)
 app.register_blueprint(payment)
 app.register_blueprint(delivery)

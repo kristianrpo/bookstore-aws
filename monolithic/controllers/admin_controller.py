@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from models.user import User
 from flask_login import login_required
 
-admin = Blueprint('admin', __name__)
+admin = Blueprint('admin', __name__, url_prefix='/objective-1')
 
 @admin.route('/admin/users')
 @login_required
