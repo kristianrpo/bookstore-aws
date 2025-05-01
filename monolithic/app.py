@@ -44,7 +44,7 @@ def initialize_delivery_providers():
             db.session.bulk_save_objects(providers)
             db.session.commit()
 
-@app.route('/')
+@app.route('/objective-1')
 def home():
     return render_template('home.html')
 
