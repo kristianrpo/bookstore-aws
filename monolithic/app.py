@@ -21,6 +21,7 @@ from controllers.purchase_controller import purchase
 from controllers.payment_controller import payment
 from controllers.delivery_controller import delivery
 from controllers.admin_controller import admin
+from controllers.home_controller import home
 
 # Registrar blueprints
 app.register_blueprint(auth)
@@ -43,10 +44,6 @@ def initialize_delivery_providers():
             ]
             db.session.bulk_save_objects(providers)
             db.session.commit()
-
-@app.route('/objective-1')
-def home():
-    return render_template('home.html')
 
 if __name__ == '__main__':
 # OJO este conexto crea las tablas e inicia los proveedores de entrega, 
