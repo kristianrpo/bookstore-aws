@@ -30,6 +30,7 @@ app.register_blueprint(purchase)
 app.register_blueprint(payment)
 app.register_blueprint(delivery)
 app.register_blueprint(admin)
+app.register_blueprint(home)
 
 from models.delivery import DeliveryProvider
 
