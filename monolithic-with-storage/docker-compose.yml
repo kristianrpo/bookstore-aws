@@ -13,6 +13,8 @@ services:
       - SECRET_KEY=${SECRET_KEY}
     ports:
       - "5000:5000"
+    volumes:
+      - /mnt/nfs:/mnt/nfs
     networks:
       - bookstore_net
 

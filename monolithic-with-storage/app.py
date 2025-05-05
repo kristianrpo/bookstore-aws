@@ -1,11 +1,14 @@
 from flask import Flask, render_template
 from extensions import db, login_manager
 from models.user import User
-from config import SQLALCHEMY_DATABASE_URI, SECRET_KEY
-
+from config import SQLALCHEMY_DATABASE_URI, SECRET_KEY, UPLOAD_FOLDER
+import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
+
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 db.init_app(app)
 login_manager.init_app(app)
