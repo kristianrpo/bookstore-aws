@@ -5,7 +5,7 @@ from extensions import db
 #from app import db
 from flask_login import login_required, current_user
 
-book = Blueprint('book', __name__, url_prefix='/objective-1/book')  
+book = Blueprint('book', __name__, url_prefix='/objective-2/book')  
 
 #@book.route('/')
 #@login_required

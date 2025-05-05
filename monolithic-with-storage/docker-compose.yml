@@ -13,7 +13,7 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
     ports:
-      - "5000:5000"
+      - "80:5000"
     volumes:
       - /mnt/nfs:/mnt/nfs
     networks:

@@ -5,7 +5,7 @@ from flask_login import login_required
 from models.delivery_assignment import DeliveryAssignment
 
 
-delivery = Blueprint('delivery', __name__, url_prefix='/objective-1')
+delivery = Blueprint('delivery', __name__, url_prefix='/objective-2')
 
 @delivery.route('/delivery/<int:purchase_id>', methods=['GET', 'POST'])
 @login_required

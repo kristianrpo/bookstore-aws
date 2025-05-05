@@ -5,7 +5,7 @@ from extensions import db
 #from app import db
 from flask_login import login_required
 
-payment = Blueprint('payment', __name__, url_prefix='/objective-1')
+payment = Blueprint('payment', __name__, url_prefix='/objective-2')
 
 @payment.route('/payment/<int:purchase_id>', methods=['GET', 'POST'])
 @login_required
