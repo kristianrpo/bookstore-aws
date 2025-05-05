@@ -3,7 +3,7 @@
 <div class="container mt-5">
     <h2 class="mb-4">Editar Libro</h2>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Título:</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ book.title }}" required>
@@ -23,6 +23,17 @@
         <div class="mb-3">
             <label for="stock" class="form-label">Stock:</label>
             <input type="number" class="form-control" id="stock" name="stock" value="{{ book.stock }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Imagen del Libro:</label>
+            {% if book.image_path %}
+            <div class="mb-2">
+                <img src="{{ url_for('book.serve_image', filename=book.image_path.split('/')[-1]) }}" alt="Current book image" class="img-thumbnail" style="max-width: 200px;">
+                <p class="text-muted">Imagen actual</p>
+            </div>
+            {% endif %}
+            <input type="file" class="form-control" id="image" name="image" accept="image/*">
+            <small class="form-text text-muted">Sube una nueva imagen para reemplazar la actual. Formatos soportados: PNG, JPG, JPEG, GIF. Tamaño máximo: 5MB</small>
         </div>
         <button type="submit" class="btn btn-primary">Guardar Cambios</button>
         <a href="{{ url_for('book.catalog') }}" class="btn btn-secondary">Cancelar</a>
