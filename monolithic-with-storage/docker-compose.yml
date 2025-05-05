@@ -11,6 +11,7 @@ services:
       - DB_HOST=${DB_HOST}
       - DB_NAME=${DB_NAME}
       - SECRET_KEY=${SECRET_KEY}
+      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
     ports:
       - "5000:5000"
     volumes:
