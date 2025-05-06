@@ -60,3 +60,14 @@ def logout():
         return jsonify(response_schema.dump({"message": "Logout successful"})), 200
     else:
         return jsonify(response_schema.dump({"message": "Logout failed"})), 400
+
+@auth.route('/user', methods=['GET'])
+@login_required
+def get_info():
+    auth_service = injector.get(AuthenticationServiceInterface)
+
+    user_info = auth_service.get_info()
+    if user_info:
+        return jsonify(user_info), 200
+    else:
+        return jsonify({"message": "User not found"}), 404

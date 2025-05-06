@@ -1,6 +1,6 @@
 from app.services.interfaces.authentication import AuthenticationServiceInterface
 from app.database.interfaces.user_repository import UserRepositoryInterface
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from injector import inject
 
@@ -38,3 +38,17 @@ class AuthenticationService(AuthenticationServiceInterface):
             return True
         except:
             return False
+        
+    def get_info(self):
+        try:
+            if current_user.is_authenticated:
+                return {
+                    "id": current_user.id,
+                    "name": current_user.name,
+                    "email": current_user.email
+                }
+            else:
+                return None
+        except:
+            return None
+        

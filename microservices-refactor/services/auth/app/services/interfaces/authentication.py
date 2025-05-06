@@ -15,3 +15,8 @@ class AuthenticationServiceInterface(ABC):
     def logout(self):
         """Log out the currently authenticated user."""
         pass
+
+    @abstractmethod
+    def get_info(self):
+        """Retrieve information about the currently authenticated user."""
+        pass
