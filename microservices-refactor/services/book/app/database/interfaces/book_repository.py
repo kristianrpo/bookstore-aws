@@ -12,6 +12,11 @@ class BookRepositoryInterface(ABC):
         pass
 
     @abstractmethod
+    def get_by_id(self, book_id: int):
+        """ Retrieve a specific book given its book_id. """
+        pass
+
+    @abstractmethod
     def create(self, title: str, author: str, description: str, price: float, stock: int, seller_id: int):
         """ Create a new book with the given details. """
         pass

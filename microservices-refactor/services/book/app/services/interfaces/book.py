@@ -26,4 +26,9 @@ class BookServiceInterface(ABC):
         """Delete a specific book given that its book_id."""
         pass
 
+    @abstractmethod
+    def get_book(book_id: int):
+        """Retrieve a specific book given its book_id."""
+        pass
+
 

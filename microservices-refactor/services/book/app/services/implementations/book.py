@@ -24,3 +24,6 @@ class BookService(BookServiceInterface):
 
     def delete_book(self, book_id: int):
         return self.book_repository.delete(book_id)
+    
+    def get_book(self, book_id: int):
+        return self.book_repository.get_by_id(book_id)

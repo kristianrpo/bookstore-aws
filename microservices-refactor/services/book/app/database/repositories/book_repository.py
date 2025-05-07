@@ -7,6 +7,9 @@ class BookRepository(BookRepositoryInterface):
 
     def get_by_seller_id(self, seller_id: int):
         return Book.query.filter_by(seller_id=seller_id).all()
+    
+    def get_by_id(self, book_id: int):
+        return Book.query.get_or_404(book_id)
 
     def create(self, title: str, author: str, description: str, price: float, stock: int, seller_id: int):
         new_book = Book(title=title, author=author, description=description, price=price, stock=stock, seller_id=seller_id)

@@ -3,7 +3,7 @@ from marshmallow import ValidationError
 from flask_login import login_required
 from app.services.interfaces.book import BookServiceInterface
 from app.settings.dependency_injector import injector
-from app.interface_adapters.schemas.book_schema import BooksListSchema
+from app.interface_adapters.schemas.book_schema import BookSchema, BooksListSchema
 from app.interface_adapters.schemas.response_schema import ResponseSchema
 
 book = Blueprint('book', __name__, url_prefix='/objective-2/book')  
@@ -57,6 +57,19 @@ def add_book():
 
 
 
+@book.route('/get_book/<int:book_id>', methods=['POST'])
+@login_required
+def get_book(book_id):
+    book_service = injector.get(BookServiceInterface)
+    book = book_service.get_book(book_id)
+    if book:
+        book_schema = BookSchema()
+        return jsonify(book_schema.dump(book)), 200
+    else:
+        response_schema = ResponseSchema()
+        return jsonify(response_schema.dump({"message": "Book not found"})), 404
+
+
 @book.route('/edit_book/<int:book_id>', methods=['POST'])
 @login_required
 def edit_book(book_id):
@@ -75,7 +88,7 @@ def edit_book(book_id):
     else:
         return jsonify(response_schema.dump({"message": "Book edit failed, maybe you don't have access to edit this book"})), 400
 
-    
+
 @book.route('/delete_book/<int:book_id>', methods=['POST'])
 @login_required
 def delete_book(book_id):
@@ -87,9 +100,3 @@ def delete_book(book_id):
         return jsonify(response_schema.dump({"message": "Book deleted successfully"})), 201
     else:
         return jsonify(response_schema.dump({"message": "Book deleted failed, maybe you don't have access to delete this book"})), 400
-
-
-
-
-
-
