@@ -17,12 +17,12 @@ class BookRepositoryInterface(ABC):
         pass
 
     @abstractmethod
-    def create(self, title: str, author: str, description: str, price: float, stock: int, seller_id: int):
+    def create(self, title: str, author: str, description: str, price: float, stock: int, seller_id: int, files: dict):
         """ Create a new book with the given details. """
         pass
 
     @abstractmethod
-    def update(self, title: str, author: str, description: str, price: str, stock: int):
+    def update(self, title: str, author: str, description: str, price: str, stock: int, seller_id: int, files: dict):
         """ Update a book with the given attributes """
         pass
 

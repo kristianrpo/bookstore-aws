@@ -12,12 +12,12 @@ class BookServiceInterface(ABC):
         pass
 
     @abstractmethod
-    def add_book(title: str, author: str, description: str, price: float, stock: int):
+    def add_book(title: str, author: str, description: str, price: float, stock: int, files: dict):
         """Create a new book with the given details."""
         pass
 
     @abstractmethod
-    def edit_book(book_id: int, title: str, author: str, description: str, price: float, stock: int):
+    def edit_book(book_id: int, title: str, author: str, description: str, price: float, stock: int, files: dict):
         """Update a book with the given attributes."""
         pass
 
@@ -29,6 +29,11 @@ class BookServiceInterface(ABC):
     @abstractmethod
     def get_book(book_id: int):
         """Retrieve a specific book given its book_id."""
+        pass
+
+    @abstractmethod
+    def serve_image(filename: str):
+        """Serve the image of a specific book."""
         pass
 
 

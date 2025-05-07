@@ -8,3 +8,4 @@ class Book(db.Model):
     price = db.Column(db.Float)
     stock = db.Column(db.Integer)
     seller_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    image_path = db.Column(db.String(255), nullable=True)
