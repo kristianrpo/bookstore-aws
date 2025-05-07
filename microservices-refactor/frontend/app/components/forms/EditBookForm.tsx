@@ -4,13 +4,25 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
+import Link from 'next/link';
 
-export default function AddBookForm() {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
-  const [stock, setStock] = useState(0);
+interface EditBookFormProps {
+    id: string;
+    book: {
+        title: string;
+        author: string;
+        description: string;
+        price: number;
+        stock: number;
+    };
+}
+
+export default function AddBookForm({id, book}: EditBookFormProps) {
+  const [title, setTitle] = useState(book.title);
+  const [author, setAuthor] = useState(book.author);
+  const [description, setDescription] = useState(book.description);
+  const [price, setPrice] = useState(book.price);
+  const [stock, setStock] = useState(book.stock);
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
@@ -26,7 +38,7 @@ export default function AddBookForm() {
 
     try {
       const response = await axios.post(
-        ROUTES_API.BOOK.ADD,
+        ROUTES_API.BOOK.UPDATE(id),
         formData,
         {
           headers: {
@@ -111,9 +123,10 @@ export default function AddBookForm() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-success">
-          Add Book
+        <button type="submit" className="btn btn-primary">
+          Save changes
         </button>
+        <Link href={ROUTES.CATALOG}>Cancel</Link>
       </form>
     </div>
   );
