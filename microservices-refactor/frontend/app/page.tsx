@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Bienvenido a la Plataforma Bookstore</h2>
+      <h2 className="mb-4">Welcome to the bookstore platform</h2>
 
       <div className="d-grid gap-3">
         <Link href={ROUTES.CATALOG} className='btn btn-primary btn-lg'>
