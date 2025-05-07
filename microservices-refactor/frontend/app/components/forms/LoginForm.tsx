@@ -1,6 +1,6 @@
 "use client"; // Este es un componente cliente
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import ROUTES_API from "@/constants/api.urls";
@@ -10,7 +10,15 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [loggedIn, setLoggedIn] = useState(false);
   const router = useRouter();
+
+  useEffect(() => {
+    if (loggedIn) {
+      router.push(ROUTES.CATALOG);
+      router.refresh();
+    }
+  }, [loggedIn, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +40,7 @@ export default function LoginForm() {
       );
 
       if (response.status === 200) {
-        router.push(ROUTES.CATALOG);
+        setLoggedIn(true);
       }
 
     } catch (error) {

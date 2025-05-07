@@ -14,6 +14,7 @@ interface EditBookFormProps {
         description: string;
         price: number;
         stock: number;
+        image_path: string;
     };
 }
 
@@ -24,6 +25,9 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
   const [price, setPrice] = useState(book.price);
   const [stock, setStock] = useState(book.stock);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const currentImagePath = book.image_path;
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -37,8 +41,8 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
     formData.append("stock", stock.toString());
 
     try {
-      const response = await axios.post(
-        ROUTES_API.BOOK.UPDATE(id),
+      const response = await axios.patch(
+        ROUTES_API.BOOK.EDIT_BOOK(id),
         formData,
         {
           headers: {
@@ -47,7 +51,7 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
           withCredentials: true,
         }
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         router.push(ROUTES.CATALOG);
       }
     } catch (error) {
@@ -58,6 +62,14 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
       }
     }
   }
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedImage(file);
+      setImagePreview(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <div>
@@ -122,6 +134,36 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
             className="form-control"
             required
           />
+        </div>
+        <div className="mb-3">
+            <label htmlFor="image" className="form-label">Imagen del Libro:</label>
+            {currentImagePath && (
+                <div className="mb-2">
+                <img
+                    src={`/api/book/serve_image/${currentImagePath.split('/').pop()}`} // Ajusta la URL para tu servidor
+                    alt="Imagen actual del libro"
+                    className="img-thumbnail"
+                    style={{ maxWidth: '200px' }}
+                />
+                <p className="text-muted">Imagen actual</p>
+                </div>
+            )}
+            <input
+                type="file"
+                className="form-control"
+                id="image"
+                name="image"
+                accept="image/*"
+                onChange={handleImageChange}
+            />
+            {imagePreview && (
+                <div className="mt-2">
+                <img src={imagePreview} alt="Previsualización de la imagen" className="img-thumbnail" style={{ maxWidth: '200px' }} />
+                </div>
+            )}
+            <small className="form-text text-muted">
+                Suba una nueva imagen para reemplazar la actual. Formatos soportados: PNG, JPG, JPEG, GIF. Tamaño máximo: 5MB.
+            </small>
         </div>
         <button type="submit" className="btn btn-primary">
           Save changes

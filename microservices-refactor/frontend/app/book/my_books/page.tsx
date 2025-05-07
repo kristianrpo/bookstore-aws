@@ -5,7 +5,7 @@ import ROUTES_API from "@/constants/api.urls";
 import { cookies } from 'next/headers'; 
 import Link from "next/link";
 import ROUTES from "@/constants/urls";
-import DeleteButton from "@/app/components/DeleteButton";
+import DeleteButton from "@/app/components/buttons/DeleteButton";
 
 export const metadata: Metadata = {
   title: "My Books",
@@ -30,23 +30,29 @@ interface BookResponse {
 export default async function MyBooks() {
   const cookieStore = cookies();
   const sessionCookie = (await cookieStore).get('session');
+  let books: Book[] = [];
 
-  const response = await axios.get<BookResponse>(
-    ROUTES_API.BOOK.MY_BOOKS,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": `session=${sessionCookie?.value}`,
-      },
-      withCredentials: true,
+  try{
+    const response = await axios.get<BookResponse>(
+      ROUTES_API.BOOK.MY_BOOKS,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Cookie": `session=${sessionCookie?.value}`,
+        },
+        withCredentials: true,
+      }
+    );
+    if (response.status == 200) {
+      books = response.data["books"]
     }
-  );
-
-  const books = response.data["books"]
+  } catch (error) {
+    books = [];
+  }
 
   return (
     <div className="container mt-5">
-      <h2 className="mb-4">Mis Libros</h2>
+      <h2 className="mb-4">My books</h2>
 
       {books.length > 0 ? (
         <table className="table table-striped">
@@ -69,7 +75,7 @@ export default async function MyBooks() {
                 <td>${book.price.toFixed(2)}</td>
                 <td>{book.stock}</td>
                 <td>
-                  <Link href={`${ROUTES.EDIT_BOOK}/${book.id}`} className="btn btn-sm btn-warning">Editar</Link>
+                  <Link href={`${ROUTES.EDIT_BOOK}/${book.id}`} className="btn btn-sm btn-warning">Edit</Link>
                   
                   <DeleteButton 
                     bookId={book.id} 

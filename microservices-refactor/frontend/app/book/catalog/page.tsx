@@ -27,21 +27,25 @@ interface BookResponse {
 export default async function Catalog() {
   const cookieStore = cookies();
   const sessionCookie = (await cookieStore).get('session');
-  
+  let books: Book[] = [];
 
-  const response = await axios.get<BookResponse>(
-    ROUTES_API.BOOK.CATALOG,
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        "Cookie": `session=${sessionCookie?.value}`,
-      },
-      withCredentials: true,
+  try{
+    const response = await axios.get<BookResponse>(
+      ROUTES_API.BOOK.CATALOG,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Cookie": `session=${sessionCookie?.value}`,
+        },
+        withCredentials: true,
+      }
+    );
+    if (response.status == 200) {
+      books = response.data["books"]
     }
-  );
-
-  const books = response.data["books"]
-  console.log(books);
+  } catch (error) {
+    books = [];
+  }
 
   return (
     <div className="container mt-4">
@@ -51,12 +55,23 @@ export default async function Catalog() {
           <div className="col" key={book.id}>
             <div className="card h-100">
               <div style={{ position: 'relative', height: '200px' }}>
+                {book.image_path && (
+                  <Image
+                    src={`${ROUTES_API.BOOK.SERVE_IMAGE}${book.image_path.split('/').pop()}`}
+                    alt={book.title}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+                {!book.image_path && (
                   <Image
                     src="/book.jpg"
                     alt="Default book image"
                     fill
                     style={{ objectFit: "cover" }}
                   />
+                )}
+                  
               </div>
               <div className="card-body">
                 <h5 className="card-title">{book.title}</h5>

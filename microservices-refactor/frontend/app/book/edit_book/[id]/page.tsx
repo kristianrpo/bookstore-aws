@@ -16,7 +16,7 @@ export default async function EditBook({ params }: { params: { id: string } }) {
   
 
   const book = await axios.post(
-    ROUTES_API.BOOK.GET_BOOK(id),
+    ROUTES_API.BOOK.BOOK(id),
     {},
     {
       headers: {

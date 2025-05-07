@@ -111,6 +111,17 @@ export default function AddBookForm() {
             required
           />
         </div>
+        <div className="mb-3">
+            <label htmlFor="image" className="form-label">Book Image (Optional)</label>
+            <input 
+              type="file" 
+              className="form-control" 
+              id="image" 
+              name="image" 
+              accept="image/*"
+            />
+            <small className="form-text text-muted">Supported formats: PNG, JPG, JPEG, GIF. Max size: 5MB</small>
+        </div>
         <button type="submit" className="btn btn-success">
           Add Book
         </button>

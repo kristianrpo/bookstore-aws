@@ -11,20 +11,20 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton: React.FC<DeleteButtonProps> = ({ bookId }) => {
-    const router = useRouter();
+  const router = useRouter();
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this book?')) {
       try {
-        const response = await axios.post(`${ROUTES_API.BOOK.DELETE(bookId)}`, null, {
+        const response = await axios.delete(`${ROUTES_API.BOOK.DELETE_BOOK(bookId)}`, {
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
           },
           withCredentials: true,
         });
 
-        if (response.status === 201) {
+        if (response.status === 204) {
           alert("Book deleted successfully");
-            router.push(ROUTES.CATALOG);
+          router.push(ROUTES.CATALOG);
           
         }
 
