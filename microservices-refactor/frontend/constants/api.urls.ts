@@ -8,11 +8,12 @@ const ROUTES_API = {
     GET_USER: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/user`
   },
   BOOK:{
-    GET_ALL: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/books`,
-    GET_BY_SELLER_ID: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/books/${id}`,
-    ADD: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/books`,
-    UPDATE: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/books/${id}`,
-    DELETE: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/books/${id}`,
+    CATALOG: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/catalog`,
+    MY_BOOKS: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/my_books`,
+    GET_BOOK: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/get_book/${id}`,
+    UPDATE: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/edit_book/${id}`,
+    DELETE: (id: string) => `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/delete_book/${id}`,
+    ADD: `${NEXT_PUBLIC_BASE_URL_SERVICE_AUTH}/objective-2/book/add_book`,
   }
 } as const;
 
