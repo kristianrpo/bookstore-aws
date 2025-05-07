@@ -1,11 +1,10 @@
 from flask import Flask
 from app.settings.extensions import db, login_manager
 from app.settings.config import Config, UPLOAD_FOLDER
-from app.interface_adapters.controllers.authentication_controller import auth
+from app.interface_adapters.controllers.book_controller import book
 from app.database.entities.user import User
 from flask_cors import CORS
 import os
-
 def create_app():
     app = Flask(__name__)
     CORS(app, supports_credentials=True) 
@@ -20,6 +19,6 @@ def create_app():
     def load_user(user_id):
         return User.query.get(int(user_id))
     
-    app.register_blueprint(auth)
+    app.register_blueprint(book)
 
     return app

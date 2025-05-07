@@ -6,7 +6,7 @@ from app.settings.dependency_injector import injector
 from app.interface_adapters.schemas.register_schema import RegisterSchema
 from app.interface_adapters.schemas.login_schema import LoginSchema
 from app.interface_adapters.schemas.response_schema import ResponseSchema
-auth = Blueprint('auth', __name__, url_prefix='/objective-2')
+auth = Blueprint('auth', __name__, url_prefix='/objective-3')
 
 @auth.route('/login', methods=['POST'])
 def login():

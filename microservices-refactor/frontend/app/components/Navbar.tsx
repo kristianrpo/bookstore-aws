@@ -30,7 +30,7 @@ export default function Navbar() {
     };
 
     checkAuthentication();
-  }, []);
+  });
 
   const handleLogout = async () => {
     try {
