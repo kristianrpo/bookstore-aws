@@ -43,7 +43,7 @@ export default async function Catalog() {
     if (response.status == 200) {
       books = response.data["books"]
     }
-  } catch (error) {
+  } catch {
     books = [];
   }
 

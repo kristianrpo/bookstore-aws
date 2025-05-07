@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -12,17 +12,22 @@ export default function AddBookForm() {
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new URLSearchParams();
+    const formData = new FormData();
     formData.append("title", title);
     formData.append("author", author);
     formData.append("description", description);
     formData.append("price", price.toString());
     formData.append("stock", stock.toString());
+
+    if (selectedImage) {
+      formData.append("image", selectedImage);
+    }
 
     try {
       const response = await axios.post(
@@ -30,7 +35,7 @@ export default function AddBookForm() {
         formData,
         {
           headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }
@@ -45,7 +50,14 @@ export default function AddBookForm() {
         setErrorMessage("Unknown error");
       }
     }
-  }
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files ? event.target.files[0] : null;
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
 
   return (
     <div>
@@ -112,15 +124,18 @@ export default function AddBookForm() {
           />
         </div>
         <div className="mb-3">
-            <label htmlFor="image" className="form-label">Book Image (Optional)</label>
-            <input 
-              type="file" 
-              className="form-control" 
-              id="image" 
-              name="image" 
-              accept="image/*"
-            />
-            <small className="form-text text-muted">Supported formats: PNG, JPG, JPEG, GIF. Max size: 5MB</small>
+          <label htmlFor="image" className="form-label">Book Image (Optional)</label>
+          <input
+            type="file"
+            className="form-control"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+          <small className="form-text text-muted">
+            Supported formats: PNG, JPG, JPEG, GIF. Max size: 5MB
+          </small>
         </div>
         <button type="submit" className="btn btn-success">
           Add Book

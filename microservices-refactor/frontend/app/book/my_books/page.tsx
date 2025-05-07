@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import axios from "axios";
 import ROUTES_API from "@/constants/api.urls";
 import { cookies } from 'next/headers'; 
@@ -55,7 +54,7 @@ export default async function MyBooks() {
     if (response.status == 200) {
       books = response.data["books"]
     }
-  } catch (error) {
+  } catch {
     books = [];
   }
 
@@ -95,7 +94,7 @@ export default async function MyBooks() {
           </tbody>
         </table>
       ) : (
-        <p>You don't have books yet</p>
+        <p>You don&apos;t have books yet</p>
       )}
 
       <div className="mt-4">
