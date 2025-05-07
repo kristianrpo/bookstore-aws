@@ -32,6 +32,15 @@ export default async function MyBooks() {
   const sessionCookie = (await cookieStore).get('session');
   let books: Book[] = [];
 
+  if (!sessionCookie) {
+    return (
+      <div className="container mt-4">
+        <h2>Unauthorized</h2>
+        <p>You are not authorized to access this page.</p>
+      </div>
+    );
+  }
+
   try{
     const response = await axios.get<BookResponse>(
       ROUTES_API.BOOK.MY_BOOKS,
