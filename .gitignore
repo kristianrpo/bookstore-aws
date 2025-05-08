@@ -28,3 +28,4 @@ yarn-error.log*
 .vercel
 *.tsbuildinfo
 next-env.d.ts
+microservices-refactor/frontend/public/images-book

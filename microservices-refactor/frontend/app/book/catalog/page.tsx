@@ -46,6 +46,8 @@ export default async function Catalog() {
     books = [];
   }
 
+  console.log(books[books.length - 1]);
+
   return (
     <div className="container mt-4">
       <h2>Book Catalog</h2>
@@ -56,7 +58,7 @@ export default async function Catalog() {
               <div style={{ position: 'relative', height: '200px' }}>
                 {book.image_path && (
                   <img
-                    src={`${ROUTES_API.BOOK.SERVE_IMAGE}${book.image_path.split('/').pop()}`}
+                    src={`http://localhost:3000/images-book/${book.image_path.split('/').pop()}`}
                     alt={book.title}
                     style={{
                       objectFit: 'cover',
