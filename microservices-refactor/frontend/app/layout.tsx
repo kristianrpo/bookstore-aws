@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { Metadata } from "next";
 import Navbar from "@/app/components/Navbar";
 import "./globals.css";

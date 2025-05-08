@@ -4,13 +4,19 @@ import ROUTES_API from "@/constants/api.urls";
 import EditBookForm from "@/app/components/forms/EditBookForm";
 import { cookies } from 'next/headers'; 
 
+
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
 export const metadata: Metadata = {
   title: "Edit Book",
   description: "Edit book page for the bookstore application",
 };
 
-export default async function EditBook({ params }: { params: { id: string } }) {
-  const { id } = await params;
+export default async function EditBook({ params }: Props) {
+  const pathParams = await params;
+  const id = pathParams.id;
   const cookieStore = cookies();
   const sessionCookie = (await cookieStore).get('session');
 

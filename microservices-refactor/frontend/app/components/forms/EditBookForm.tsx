@@ -18,7 +18,7 @@ interface EditBookFormProps {
     };
 }
 
-export default function AddBookForm({id, book}: EditBookFormProps) {
+export default function EditBookForm({id, book}: EditBookFormProps) {
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [description, setDescription] = useState(book.description);
@@ -33,12 +33,17 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new URLSearchParams();
+    const formData = new FormData();
     formData.append("title", title);
     formData.append("author", author);
     formData.append("description", description);
     formData.append("price", price.toString());
     formData.append("stock", stock.toString());
+
+    if (selectedImage) {
+      formData.append("image", selectedImage as Blob);
+    }
+
 
     try {
       const response = await axios.patch(
@@ -140,7 +145,7 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
             {currentImagePath && (
                 <div className="mb-2">
                 <img
-                    src={`/api/book/serve_image/${currentImagePath.split('/').pop()}`} // Ajusta la URL para tu servidor
+                    src={`/api/book/serve_image/${currentImagePath.split('/').pop()}`}
                     alt="Imagen actual del libro"
                     className="img-thumbnail"
                     style={{ maxWidth: '200px' }}
@@ -162,7 +167,7 @@ export default function AddBookForm({id, book}: EditBookFormProps) {
                 </div>
             )}
             <small className="form-text text-muted">
-                Suba una nueva imagen para reemplazar la actual. Formatos soportados: PNG, JPG, JPEG, GIF. Tamaño máximo: 5MB.
+                Upload a new image to replace the current one. Supported formats: PNG, JPG, JPEG, GIF. Max size: 5MB.
             </small>
         </div>
         <button type="submit" className="btn btn-primary">

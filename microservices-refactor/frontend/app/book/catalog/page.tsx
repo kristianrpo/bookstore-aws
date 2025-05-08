@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import axios from "axios";
 import ROUTES_API from "@/constants/api.urls";
 import { cookies } from 'next/headers'; 
@@ -43,7 +42,7 @@ export default async function Catalog() {
     if (response.status == 200) {
       books = response.data["books"]
     }
-  } catch (error) {
+  } catch {
     books = [];
   }
 
@@ -56,19 +55,27 @@ export default async function Catalog() {
             <div className="card h-100">
               <div style={{ position: 'relative', height: '200px' }}>
                 {book.image_path && (
-                  <Image
+                  <img
                     src={`${ROUTES_API.BOOK.SERVE_IMAGE}${book.image_path.split('/').pop()}`}
                     alt={book.title}
-                    fill
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      display: 'block',
+                    }}
                   />
                 )}
                 {!book.image_path && (
-                  <Image
-                    src="/book.jpg"
+                  <img
+                    src="/images/book.jpg"
                     alt="Default book image"
-                    fill
-                    style={{ objectFit: "cover" }}
+                    style={{
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                      display: 'block',
+                    }}
                   />
                 )}
                   
