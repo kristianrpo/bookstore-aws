@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import axios from "axios";
 import ROUTES_API from "@/constants/api.urls";
+import ROUTES from "@/constants/urls";
 import { cookies } from 'next/headers'; 
 
 export const metadata: Metadata = {
@@ -56,7 +57,7 @@ export default async function Catalog() {
               <div style={{ position: 'relative', height: '200px' }}>
                 {book.image_path && (
                   <img
-                    src={`http://localhost:3000/images-book/${book.image_path.split('/').pop()}`}
+                    src={`${ROUTES.STATIC_SERVER}/images-book/${book.image_path.split('/').pop()}`}
                     alt={book.title}
                     style={{
                       objectFit: 'cover',

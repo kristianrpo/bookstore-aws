@@ -141,16 +141,16 @@ export default function EditBookForm({id, book}: EditBookFormProps) {
           />
         </div>
         <div className="mb-3">
-            <label htmlFor="image" className="form-label">Imagen del Libro:</label>
+            <label htmlFor="image" className="form-label">Current Book Image:</label>
             {currentImagePath && (
                 <div className="mb-2">
                 <img
-                    src={`/api/book/serve_image/${currentImagePath.split('/').pop()}`}
+                    src={`${ROUTES.STATIC_SERVER}/images-book/${currentImagePath.split('/').pop()}`}
                     alt="Imagen actual del libro"
                     className="img-thumbnail"
                     style={{ maxWidth: '200px' }}
                 />
-                <p className="text-muted">Imagen actual</p>
+                <p className="text-muted">Current Image</p>
                 </div>
             )}
             <input
