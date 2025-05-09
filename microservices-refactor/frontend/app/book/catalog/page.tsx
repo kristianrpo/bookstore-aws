@@ -46,8 +46,6 @@ export default async function Catalog() {
     books = [];
   }
 
-  console.log(books[books.length - 1]);
-
   return (
     <div className="container mt-4">
       <h2>Book Catalog</h2>
