@@ -10,7 +10,7 @@ import os
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, supports_credentials=True) 
+    CORS(app, supports_credentials=True, origins="*", allow_headers="*", methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
     app.config.from_object(Config)

@@ -32,13 +32,17 @@ def select_delivery(purchase_id):
         )
 
         if success:
-            return redirect(url_for("book.catalog"))
+            return jsonify({"message": "Delivery assigned successfully"}), 200
         else:
             return jsonify({"message": "Failed to assign delivery"}), 400
 
     deliveries = delivery_service.list_deliveries()
     schema = DeliveriesListSchema()
-    return render_template("delivery_options.html", providers=deliveries, purchase_id=purchase_id)
+    return jsonify({
+        "message": "Delivery assigned successfully",
+        "providers": schema.dump({"deliveries": deliveries})["deliveries"],
+        "purchase_id": purchase_id
+    }), 200
 
 @delivery.route('/my_deliveries')
 @login_required
