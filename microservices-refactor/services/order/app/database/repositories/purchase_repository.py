@@ -30,3 +30,6 @@ class PurchaseRepository(PurchaseRepositoryInterface):
         purchase = Purchase.query.get(purchase_id)
         if purchase:
             purchase.status = status
+
+    def get_purchase_by_id(self, purchase_id: int):
+        return Purchase.query.get_or_404(purchase_id)
