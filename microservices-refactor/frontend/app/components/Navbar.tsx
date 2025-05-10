@@ -78,6 +78,9 @@ export default function Navbar() {
                   <Link className="nav-link" href={ROUTES.MY_BOOKS}>My books</Link>
                 </li>
                 <li className="nav-item">
+                  <Link className="nav-link" href={ROUTES.MY_DELIVERIES}>My deliveries</Link>
+                </li>
+                <li className="nav-item">
                   <Link className="nav-link" href={ROUTES.ADMIN_USERS}>Users</Link>
                 </li>
                 <li className="nav-item">
