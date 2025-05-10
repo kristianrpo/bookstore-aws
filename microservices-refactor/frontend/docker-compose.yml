@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  nextjs-app:
+    build: .
+    restart: always
+    environment:
+      - NEXT_PUBLIC_BASE_URL_API_AUTH=${NEXT_PUBLIC_BASE_URL_API_AUTH}
+      - NEXT_PUBLIC_BASE_URL_API_BOOK=${NEXT_PUBLIC_BASE_URL_API_BOOK}
+      - NEXT_PUBLIC_BASE_URL_STATIC_SERVER=${NEXT_PUBLIC_BASE_URL_STATIC_SERVER}
+    ports:
+      - "4000:4000"
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    networks:
+      - bookstore_net
+
+networks:
+  bookstore_net:
