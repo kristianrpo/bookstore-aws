@@ -12,6 +12,3 @@ class Config:
     SECRET_KEY = os.getenv('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     UPLOAD_FOLDER = UPLOAD_FOLDER
-    SESSION_COOKIE_SAMESITE = 'None'
-    SESSION_COOKIE_SECURE = False
-    SESSION_COOKIE_DOMAIN = 'host.docker.internal'
