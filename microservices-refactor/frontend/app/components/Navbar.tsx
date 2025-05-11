@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
-import ROUTES_API from "@/constants/api.urls";
 import ROUTES from "@/constants/urls";
 
 export default function Navbar() {
@@ -14,10 +13,7 @@ export default function Navbar() {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get(ROUTES_API.AUTH.GET_USER, {
-          withCredentials: true,
-        });
-
+        const response = await axios.get('/api/auth/user', { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
           setName(response.data.name);
@@ -34,18 +30,15 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get(
-        ROUTES_API.AUTH.LOGOUT,
-        { withCredentials: true }
-      );
+      const response = await axios.get('/api/auth/logout', { withCredentials: true });
 
       if (response.status === 200) {
         setIsAuthenticated(false);
-        setName("");
-        router.push(ROUTES.LOGIN);
+        setName('');
+        router.push('/login');
       }
     } catch {
-      console.error("Logout failed");
+      console.error('Logout failed');
     }
   };
 

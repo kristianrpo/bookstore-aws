@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import ROUTES from "@/constants/urls";
 
 export default function RegisterForm() {
@@ -15,30 +14,25 @@ export default function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new URLSearchParams();
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("password", password);
-
     try {
       const response = await axios.post(
-        ROUTES_API.AUTH.REGISTER,
-        formData,
+        '/api/auth/register',
+        { name, email, password },
         {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
           withCredentials: true,
         }
       );
+      
       if (response.status === 201) {
         router.push(ROUTES.LOGIN);
       }
     } catch (error) {
-      if (axios.isAxiosError(error) && error.response && error.response.data) {
-        setErrorMessage(error.response.data.message);
+      if (axios.isAxiosError(error) && error.response) {
+        setErrorMessage(
+          error.response.data.message || "Registration failed"
+        );
       } else {
-        setErrorMessage("Unknown error");
+        setErrorMessage("Unknown error during registration");
       }
     }
   };
