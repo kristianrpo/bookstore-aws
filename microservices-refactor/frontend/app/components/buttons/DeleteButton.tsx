@@ -1,8 +1,5 @@
 "use client";
-
 import React from 'react';
-import axios from 'axios';
-import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
 import { useRouter } from 'next/navigation';
 
@@ -15,23 +12,23 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ bookId }) => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this book?')) {
       try {
-        const response = await axios.delete(`${ROUTES_API.BOOK.DELETE_BOOK(bookId)}`, {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          withCredentials: true,
+        const response = await fetch(`/api/book/delete-book/${bookId}`, {
+          method: 'DELETE',
+          credentials: 'include',
         });
 
-        if (response.status === 204) {
+        if (response.status === 200) {
           alert("Book deleted successfully");
           router.push(ROUTES.CATALOG);
-          
+          router.refresh();
+        } else {
+          const errorData = await response.json();
+          alert(errorData.message || 'Failed to delete book');
         }
-
-      } catch (error) {
-        console.error("Error deleting book:", error);
+      } catch {
+        alert("An unexpected error occurred");
       }
-    }
+  };
   };
 
   return (

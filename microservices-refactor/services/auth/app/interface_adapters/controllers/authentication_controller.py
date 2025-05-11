@@ -57,7 +57,17 @@ def logout():
 
     result = auth_service.logout()
     if result:
-        return jsonify(response_schema.dump({"message": "Logout successful"})), 200
+        response = jsonify(response_schema.dump({"message": "Logout successful"}))
+        response.set_cookie(
+            'session',
+            '',
+            expires=0,
+            path='/',
+            httponly=True,
+            secure=True if request.is_secure else False,
+            samesite='Lax'
+        )
+        return response, 200
     else:
         return jsonify(response_schema.dump({"message": "Logout failed"})), 400
 

@@ -1,0 +1,57 @@
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    restart: always
+    environment:
+      - NEXT_PUBLIC_BASE_URL_API_AUTH=http://auth:5000/objective-3
+      - NEXT_PUBLIC_BASE_URL_API_BOOK=http://book:5001/objective-3
+      - BASE_URL_STATIC_SERVER=http://frontend:4000
+    ports:
+      - "4000:4000"
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    networks:
+      - project-2
+
+  auth:
+    build: ./services/auth
+    restart: always
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
+    ports:
+      - "5000:5000"
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    networks:
+      - project-2
+
+  book:
+    build: ./services/book
+    restart: always
+    environment:
+      - FLASK_ENV=development
+      - PYTHONUNBUFFERED=1
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
+    ports:
+      - "5001:5001"
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    networks:
+      - project-2
+
+networks:
+  project-2:
+    driver: bridge

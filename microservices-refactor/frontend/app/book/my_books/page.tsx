@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import { cookies } from 'next/headers'; 
 import Link from "next/link";
 import ROUTES from "@/constants/urls";
@@ -21,10 +20,6 @@ interface Book {
     image_path: string;
 }
 
-interface BookResponse {
-    books: Book[];
-}
-
 
 export default async function MyBooks() {
   const cookieStore = cookies();
@@ -40,19 +35,18 @@ export default async function MyBooks() {
     );
   }
 
-  try{
-    const response = await axios.get<BookResponse>(
-      ROUTES_API.BOOK.MY_BOOKS,
+  try {
+    const response = await axios.get<Book[]>(
+      `${process.env.NEXT_PUBLIC_URL!}/api/book/my-books`,
       {
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Cookie": `session=${sessionCookie?.value}`,
+          Cookie: `session=${sessionCookie?.value}`,
         },
         withCredentials: true,
       }
     );
-    if (response.status == 200) {
-      books = response.data["books"]
+    if (response.status === 200) {
+      books = response.data;
     }
   } catch {
     books = [];

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import ROUTES from "@/constants/urls";
 
 export default function LoginForm() {
@@ -22,27 +21,15 @@ export default function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    const formData = new URLSearchParams();
-    formData.append("email", email);
-    formData.append("password", password);
-
     try {
       const response = await axios.post(
-        ROUTES_API.AUTH.LOGIN,
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          withCredentials: true,
-        }
+        '/api/auth/login', 
+        { email, password }
       );
 
       if (response.status === 200) {
         setLoggedIn(true);
       }
-
     } catch (error) {
       if (axios.isAxiosError(error) && error.response && error.response.data) {
         setErrorMessage(error.response.data.message);
