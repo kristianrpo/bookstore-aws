@@ -1,25 +1,21 @@
 version: '3.8'
 services:
   frontend:
-    image: kristianrpo30/frontend:latest
+    build: ./frontend
     restart: always
     environment:
-      - NEXT_PUBLIC_BASE_URL_API_AUTH=${NEXT_PUBLIC_BASE_URL_API_AUTH}
-      - NEXT_PUBLIC_BASE_URL_API_BOOK=${NEXT_PUBLIC_BASE_URL_API_BOOK}
-      - NEXT_PUBLIC_BASE_URL_STATIC_SERVER=${NEXT_PUBLIC_BASE_URL_STATIC_SERVER}
+      - NEXT_PUBLIC_BASE_URL_API_AUTH=http://auth:5000/objective-3
+      - NEXT_PUBLIC_BASE_URL_API_BOOK=http://book:5001/objective-3
+      - BASE_URL_STATIC_SERVER=http://frontend:4000
     ports:
       - "4000:4000"
     volumes:
       - /mnt/nfs:/mnt/nfs
     networks:
-      - default
-    deploy:
-      replicas: 2 
-      restart_policy:
-        condition: on-failure
+      - project-2
 
   auth:
-    image: kristianrpo30/authentication:latest
+    build: ./services/auth
     restart: always
     environment:
       - FLASK_ENV=development
@@ -35,14 +31,10 @@ services:
     volumes:
       - /mnt/nfs:/mnt/nfs
     networks:
-      - default
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
+      - project-2
 
   book:
-    image: kristianrpo30/book:latest
+    build: ./services/book
     restart: always
     environment:
       - FLASK_ENV=development
@@ -58,12 +50,8 @@ services:
     volumes:
       - /mnt/nfs:/mnt/nfs
     networks:
-      - default
-    deploy:
-      replicas: 2
-      restart_policy:
-        condition: on-failure
+      - project-2
 
 networks:
-  bookstore_net:
-    driver: overlay
+  project-2:
+    driver: bridge
