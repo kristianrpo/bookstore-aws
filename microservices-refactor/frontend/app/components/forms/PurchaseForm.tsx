@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
-import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
 
 interface PurchaseFormProps {
@@ -22,18 +21,10 @@ export default function PurchaseForm({ bookId, price, stock }: PurchaseFormProps
     setIsLoading(true);
 
     try {
-      const formData = new URLSearchParams();
-      formData.append('quantity', quantity.toString());
-      formData.append('price', price.toString());
       const response = await axios.post(
-        `${ROUTES_API.ORDER.PURCHASE(bookId)}`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          withCredentials: true,
-        }
+        `/api/order/make-purchase/${bookId}`,
+        { quantity, price },
+        { withCredentials: true }
       );
 
       if (response.status === 200) {

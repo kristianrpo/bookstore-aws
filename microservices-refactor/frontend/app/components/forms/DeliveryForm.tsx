@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import { useRouter } from "next/navigation";
 import ROUTES from "@/constants/urls";
+import axios from "axios";
 
 interface DeliveryFormProps {
   purchaseId: string;
@@ -20,10 +19,13 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
   useEffect(() => {
     const fetchProviders = async () => {
       try {
-        const response = await axios.get(ROUTES_API.ORDER.DELIVERY(purchaseId), {
-          withCredentials: true,
-        });
-        setProviders(response.data.providers || response.data.deliveries || []);
+        const response = await fetch(
+          `/api/order/select-delivery/${purchaseId}`, {
+            method: 'GET',
+            credentials: 'include',
+          });
+        const data = await response.json();
+        setProviders(data.providers || data.deliveries || []);
       } catch (err) {
         setError("Failed to fetch delivery providers.");
       } finally {
@@ -41,16 +43,11 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
       return;
     }
     try {
-      const formData = new URLSearchParams();
-      formData.append("provider_id", selectedProvider);
-      await axios.post(
-        ROUTES_API.ORDER.DELIVERY(purchaseId),
-        formData,
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          withCredentials: true,
-        }
-      );
+      await fetch(
+        `/api/order/select-delivery/${purchaseId}`, {
+          method: 'POST',
+          credentials: 'include',
+        });
       router.push(ROUTES.CATALOG);
     } catch (err) {
       setError("Failed to assign delivery. Please try again.");

@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import { useRouter } from "next/navigation";
+import ROUTES from "@/constants/urls";
 
 export default function CreateDelivery() {
   const [name, setName] = useState("");
@@ -22,20 +22,13 @@ export default function CreateDelivery() {
       return;
     }
     try {
-      const formData = new URLSearchParams();
-      formData.append("name", name);
-      formData.append("coverage_area", coverageArea);
-      formData.append("cost", cost);
       await axios.post(
-        ROUTES_API.ORDER.CREATE_DELIVERY,
-        formData,
-        {
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          withCredentials: true,
-        }
+        '/api/order/create-delivery',
+        { name, coverageArea, cost },
+        { withCredentials: true }
       );
       setSuccess("Delivery created successfully!");
-      setTimeout(() => router.push("/delivery/my_deliveries"), 1000);
+      setTimeout(() => router.push(ROUTES.MY_DELIVERIES), 1000);
     } catch (err) {
       setError("Failed to create delivery. Please try again.");
     }

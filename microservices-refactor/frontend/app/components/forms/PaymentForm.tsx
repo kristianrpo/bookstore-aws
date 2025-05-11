@@ -1,10 +1,9 @@
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
+import axios from 'axios';
 
 interface PaymentFormProps {
   purchaseId: string;
@@ -17,15 +16,16 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const router = useRouter();
-  console.log(purchaseId);
-  console.log(amount);
 
   const getPaymentMethods = useCallback(async () => {
     try {
-      const response = await axios.get(ROUTES_API.ORDER.PAYMENT(purchaseId), {
-        withCredentials: true,
-      });
-      setMethods(response.data.methods || []);
+      const response = await fetch(
+        `/api/order/select-payment/${purchaseId}`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+      const data = await response.json();
+      setMethods(data.methods || []);
     } catch (error) {
       setError('Failed to fetch payment methods. Please try again.');
     } finally {
@@ -47,20 +47,10 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
     }
 
     try {
-      const formData = new URLSearchParams();
-      formData.append('method', selectedMethod);
-      formData.append('amount', amount.toString());
-      console.log(formData);
-
       const response = await axios.post(
-        ROUTES_API.ORDER.PAYMENT(purchaseId),
-        formData,
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          withCredentials: true,
-        }
+        `/api/order/select-payment/${purchaseId}`,
+        { selectedMethod, amount },
+        { withCredentials: true }
       );
 
       if (response.status === 200) {
