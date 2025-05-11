@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
 
 export default function AddBookForm() {
@@ -30,26 +28,22 @@ export default function AddBookForm() {
     }
 
     try {
-      const response = await axios.post(
-        ROUTES_API.BOOK.ADD,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 201) {
+      const response = await fetch('/api/book/add-book', {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (response.ok) {
         router.push(ROUTES.CATALOG);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response && error.response.data) {
-        setErrorMessage(error.response.data.message);
+        router.refresh();
       } else {
-        setErrorMessage("Unknown error");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Failed to add book');
       }
-    }
+    } catch {
+      setErrorMessage('An unexpected error occurred');
+    } 
   };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

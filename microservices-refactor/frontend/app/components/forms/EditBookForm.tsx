@@ -1,8 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import ROUTES_API from '@/constants/api.urls';
 import ROUTES from '@/constants/urls';
 import Link from 'next/link';
 
@@ -44,29 +42,24 @@ export default function EditBookForm({id, book}: EditBookFormProps) {
       formData.append("image", selectedImage as Blob);
     }
 
-
     try {
-      const response = await axios.patch(
-        ROUTES_API.BOOK.EDIT_BOOK(id),
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          withCredentials: true,
-        }
-      );
-      if (response.status === 200) {
+      const response = await fetch(`/api/book/edit-book/${id}`, {
+        method: 'PATCH',
+        body: formData,
+        credentials: 'include',
+      });
+
+      if (response.ok) {
         router.push(ROUTES.CATALOG);
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response && error.response.data) {
-        setErrorMessage(error.response.data.message);
+        router.refresh();
       } else {
-        setErrorMessage("Unknown error");
+        const errorData = await response.json();
+        setErrorMessage(errorData.message || 'Failed to edit book');
       }
-    }
-  }
+    } catch {
+      setErrorMessage('An unexpected error occurred');
+    } 
+  };
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
@@ -145,8 +138,8 @@ export default function EditBookForm({id, book}: EditBookFormProps) {
             {currentImagePath && (
                 <div className="mb-2">
                 <img
-                    src={`${ROUTES.STATIC_SERVER}/images-book/${currentImagePath.split('/').pop()}`}
-                    alt="Imagen actual del libro"
+                    src={`/api/book/image/${book.image_path.split('/').pop()}`}
+                    alt="Current Book Image"
                     className="img-thumbnail"
                     style={{ maxWidth: '200px' }}
                 />
