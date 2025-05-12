@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import ROUTES from '@/constants/urls';
 
 interface PurchaseFormProps {
@@ -21,15 +20,21 @@ export default function PurchaseForm({ bookId, price, stock }: PurchaseFormProps
     setIsLoading(true);
 
     try {
-      const response = await axios.post(
-        `/api/order/make-purchase/${bookId}`,
-        { quantity, price },
-        { withCredentials: true }
-      );
-
-      if (response.status === 200) {
-        const purchaseId = response.data.purchase_id;
-        router.push(`${ROUTES.PAYMENT}/${purchaseId}`);
+      const response = await fetch(`/api/order/purchase/${bookId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quantity, price }),
+        credentials: 'include',
+      });
+    
+      if (response.ok) {
+        const data = await response.json();
+        router.push(`${ROUTES.PAYMENT}/${data.purchase_id}`);
+      } else {
+        const error = await response.json();
+        alert(error.message || 'Failed to process purchase. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
