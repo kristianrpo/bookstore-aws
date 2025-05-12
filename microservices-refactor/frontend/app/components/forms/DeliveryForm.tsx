@@ -3,15 +3,21 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ROUTES from "@/constants/urls";
-import axios from "axios";
 
 interface DeliveryFormProps {
   purchaseId: string;
 }
 
+interface Provider {
+  id: number;
+  name: string;
+  coverage_area: string;
+  cost: number;
+}
+
 export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
-  const [providers, setProviders] = useState<any[]>([]);
-  const [selectedProvider, setSelectedProvider] = useState("");
+  const [providers, setProviders] = useState<Provider[]>([]);
+  const [selectedProvider, setSelectedProvider] = useState('');
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -26,7 +32,7 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
           });
         const data = await response.json();
         setProviders(data.providers || data.deliveries || []);
-      } catch (err) {
+      } catch {
         setError("Failed to fetch delivery providers.");
       } finally {
         setLoading(false);
@@ -49,7 +55,7 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
           credentials: 'include',
         });
       router.push(ROUTES.CATALOG);
-    } catch (err) {
+    } catch {
       setError("Failed to assign delivery. Please try again.");
     }
   };
@@ -69,7 +75,7 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
           required
         >
           <option value="">Select...</option>
-          {providers.map((provider: any) => (
+          {providers.map((provider: Provider) => (
             <option key={provider.id} value={provider.id}>
               {provider.name} (Area: {provider.coverage_area}, Cost: {provider.cost})
             </option>

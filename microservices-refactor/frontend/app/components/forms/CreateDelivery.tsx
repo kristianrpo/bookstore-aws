@@ -29,7 +29,7 @@ export default function CreateDelivery() {
       );
       setSuccess("Delivery created successfully!");
       setTimeout(() => router.push(ROUTES.MY_DELIVERIES), 1000);
-    } catch (err) {
+    } catch {
       setError("Failed to create delivery. Please try again.");
     }
   };

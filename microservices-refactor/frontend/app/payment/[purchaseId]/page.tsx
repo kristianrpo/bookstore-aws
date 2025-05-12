@@ -16,10 +16,8 @@ export default function PaymentPage({ params }: { params: Promise<{ purchaseId: 
         const response = await axios.get(ROUTES_API.ORDER.PAYMENT(purchaseId), {
           withCredentials: true,
         });
-        // The amount should be available in the purchase details
-        // You might need to adjust this based on your backend response structure
         setAmount(response.data.amount || 0);
-      } catch (err) {
+      } catch {
         setError('Failed to fetch purchase details');
       }
     };

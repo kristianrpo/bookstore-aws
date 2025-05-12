@@ -26,7 +26,7 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
         });
       const data = await response.json();
       setMethods(data.methods || []);
-    } catch (error) {
+    } catch {
       setError('Failed to fetch payment methods. Please try again.');
     } finally {
       setLoading(false);
@@ -58,8 +58,7 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
       } else {
         setError(response.data.message || 'Payment failed');
       }
-    } catch (err: any) {
-      []
+    } catch {
       setError('Payment failed. Please try again.');
     }
   };
