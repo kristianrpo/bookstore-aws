@@ -31,7 +31,8 @@ export default function PurchaseForm({ bookId, price, stock }: PurchaseFormProps
     
       if (response.ok) {
         const data = await response.json();
-        router.push(`${ROUTES.PAYMENT}/${data.purchase_id}`);
+        const purchaseId = data.purchase_id;
+        router.push(`${ROUTES.PAYMENT}/${purchaseId}`);
       } else {
         const error = await response.json();
         alert(error.message || 'Failed to process purchase. Please try again.');

@@ -2,8 +2,6 @@
 
 import { use, useEffect, useState } from 'react';
 import PaymentForm from '@/app/components/forms/PaymentForm';
-import axios from 'axios';
-import ROUTES_API from '@/constants/api.urls';
 
 export default function PaymentPage({ params }: { params: Promise<{ purchaseId: string }> }) {
   const { purchaseId } = use(params);
@@ -13,10 +11,12 @@ export default function PaymentPage({ params }: { params: Promise<{ purchaseId: 
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
-        const response = await axios.get(ROUTES_API.ORDER.PAYMENT(purchaseId), {
-          withCredentials: true,
+        const response = await fetch(`/api/order/select-payment/${purchaseId}`, {
+          method: 'GET',
+          credentials: 'include',
         });
-        setAmount(response.data.amount || 0);
+        const data = await response.json();
+        setAmount(data.amount || 0);
       } catch {
         setError('Failed to fetch purchase details');
       }

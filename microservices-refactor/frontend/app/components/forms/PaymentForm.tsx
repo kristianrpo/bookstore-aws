@@ -3,7 +3,6 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import ROUTES from '@/constants/urls';
-import axios from 'axios';
 
 interface PaymentFormProps {
   purchaseId: string;
@@ -47,16 +46,21 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
     }
 
     try {
-      const response = await axios.post(
-        `/api/order/select-payment/${purchaseId}`,
-        { selectedMethod, amount },
-        { withCredentials: true }
+      const response = await fetch(`/api/order/select-payment/${purchaseId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ selectedMethod, amount }),
+          credentials: 'include',
+        }
       );
 
-      if (response.status === 200) {
+      if (response.ok) {
         router.push(`${ROUTES.DELIVERY}/${purchaseId}`);
       } else {
-        setError(response.data.message || 'Payment failed');
+        const errorData = await response.json();
+        setError(errorData.message || 'Payment failed');
       }
     } catch {
       setError('Payment failed. Please try again.');
