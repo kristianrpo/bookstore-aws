@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import ROUTES from "@/constants/urls";
 
@@ -17,18 +16,29 @@ export default function CreateDelivery() {
     e.preventDefault();
     setError("");
     setSuccess("");
+
     if (!name || !coverageArea || !cost) {
       setError("All fields are required.");
       return;
     }
+
     try {
-      await axios.post(
-        '/api/order/create-delivery',
-        { name, coverageArea, cost },
-        { withCredentials: true }
-      );
-      setSuccess("Delivery created successfully!");
-      setTimeout(() => router.push(ROUTES.MY_DELIVERIES), 1000);
+      const response = await fetch('/api/order/create-delivery', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, coverageArea, cost }),
+        credentials: 'include',
+      });
+
+      if (response.ok) {
+        setSuccess("Delivery created successfully!");
+        setTimeout(() => router.push(ROUTES.MY_DELIVERIES), 1000);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Failed to create delivery');
+      }
     } catch {
       setError("Failed to create delivery. Please try again.");
     }
