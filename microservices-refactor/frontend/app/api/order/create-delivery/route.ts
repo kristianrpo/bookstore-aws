@@ -24,7 +24,6 @@ export async function POST(request: Request) {
             );
         }
 
-        // Debug log
         console.log('Sending to API:', {
           name,
           coverage_area: coverageArea,

@@ -17,7 +17,7 @@ export async function GET() {
 
         if (response.status === 200) {
             return NextResponse.json(
-                { message: 'Delivery created successfully' },
+                { deliveries: response.data.deliveries || response.data || [] },
                 { status: 200 }
             );
         } else {

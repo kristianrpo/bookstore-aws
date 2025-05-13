@@ -1,4 +1,6 @@
-import { cookies } from 'next/headers'; 
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ROUTES from "@/constants/urls";
 
@@ -9,32 +11,31 @@ interface Delivery {
   cost: number;
 }
 
-export default async function MyDeliveries() {
-  const cookieStore = cookies();
-  const sessionCookie = (await cookieStore).get('session');
-  let deliveries: Delivery[] = [];
+export default function MyDeliveries() {
+  const [deliveries, setDeliveries] = useState<Delivery[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  if (!sessionCookie) {
-    return (
-      <div className="container mt-4">
-        <h2>Unauthorized</h2>
-        <p>You are not authorized to access this page.</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchDeliveries = async () => {
+      try {
+        const response = await fetch("/api/order/my-deliveries", {
+          method: "GET",
+          credentials: "include",
+        });
+        const data = await response.json();
+        setDeliveries(data.deliveries || []);
+      } catch {
+        setError("Error fetching deliveries");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchDeliveries();
+  }, []);
 
-  try {
-    const response = await fetch(`api/delivery/my_deliveries`, {
-      method: 'GET',
-      credentials: 'include',
-    });
-    const data = await response.json();
-    if (response.status === 200) {
-      deliveries = data["deliveries"];
-    }
-  } catch {
-    deliveries = [];
-  }
+  if (loading) return <div className="container mt-5">Loading...</div>;
+  if (error) return <div className="container mt-5 text-danger">{error}</div>;
 
   return (
     <div className="container mt-5">
@@ -62,8 +63,12 @@ export default async function MyDeliveries() {
         <p>You don&apos;t have deliveries yet</p>
       )}
       <div className="mt-4">
-        <Link href={ROUTES.CREATE_DELIVERY} className="btn btn-primary">Add new delivery</Link>
-        <Link href={ROUTES.CATALOG} className="btn btn-secondary">Return to catalog</Link>
+        <Link href={ROUTES.CREATE_DELIVERY} className="btn btn-primary">
+          Add new delivery
+        </Link>
+        <Link href={ROUTES.CATALOG} className="btn btn-secondary">
+          Return to catalog
+        </Link>
       </div>
     </div>
   );
