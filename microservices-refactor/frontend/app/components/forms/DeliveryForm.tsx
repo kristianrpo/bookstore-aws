@@ -49,12 +49,21 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
       return;
     }
     try {
-      await fetch(
+      const formData = new FormData();
+      formData.append('provider', selectedProvider);
+
+      const response = await fetch(
         `/api/order/select-delivery/${purchaseId}`, {
           method: 'POST',
+          body: formData,
           credentials: 'include',
-        });
-      router.push(ROUTES.CATALOG);
+        }
+      );
+      if (response.ok) {
+        router.push(ROUTES.CATALOG);
+      } else {
+        setError("Failed to assign delivery. Please try again.");
+      }
     } catch {
       setError("Failed to assign delivery. Please try again.");
     }
