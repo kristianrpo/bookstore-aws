@@ -3,11 +3,8 @@ services:
   frontend:
     build: ./frontend
     restart: always
-    environment:
-      - NEXT_PUBLIC_BASE_URL_API_AUTH=http://auth:5000/objective-3
-      - NEXT_PUBLIC_BASE_URL_API_BOOK=http://book:5001/objective-3
-      - NEXT_PUBLIC_BASE_URL_API_ORDER=http://order:5002/objective-3
-      - BASE_URL_STATIC_SERVER=http://frontend:4000
+    env_file:
+      - .env
     ports:
       - "4000:4000"
     volumes:
@@ -18,15 +15,8 @@ services:
   auth:
     build: ./services/auth
     restart: always
-    environment:
-      - FLASK_ENV=development
-      - PYTHONUNBUFFERED=1
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
+    env_file:
+      - .env
     ports:
       - "5000:5000"
     volumes:
@@ -37,15 +27,8 @@ services:
   book:
     build: ./services/book
     restart: always
-    environment:
-      - FLASK_ENV=development
-      - PYTHONUNBUFFERED=1
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
+    env_file:
+      - .env
     ports:
       - "5001:5001"
     volumes:
@@ -56,15 +39,8 @@ services:
   order:
     build: ./services/order
     restart: always
-    environment:
-      - FLASK_ENV=development
-      - PYTHONUNBUFFERED=1
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_HOST=${DB_HOST}
-      - DB_NAME=${DB_NAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - NFS_MOUNT_POINT=${NFS_MOUNT_POINT}
+    env_file:
+      - .env
     ports:
       - "5002:5002"
     volumes:

@@ -8,7 +8,7 @@ const handle = app.getRequestHandler();
 
 const server = express();
 
-server.use('/images-book', express.static(path.join(__dirname, 'public/images-book')));
+server.use('/images-book', express.static('/mnt/nfs/uploads/book_images/'));
 
 app.prepare().then(() => {
   server.all('*', (req, res) => {
