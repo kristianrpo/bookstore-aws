@@ -1,17 +1,12 @@
-import axios from "axios";
-import ROUTES_API from "@/constants/api.urls";
 import { cookies } from 'next/headers'; 
 import Link from "next/link";
+import ROUTES from "@/constants/urls";
 
 interface Delivery {
   id: string;
   name: string;
   coverage_area: string;
   cost: number;
-}
-
-interface DeliveryResponse {
-  deliveries: Delivery[];
 }
 
 export default async function MyDeliveries() {
@@ -29,18 +24,13 @@ export default async function MyDeliveries() {
   }
 
   try {
-    const response = await axios.get<DeliveryResponse>(
-      ROUTES_API.ORDER.MY_DELIVERIES,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Cookie": `session=${sessionCookie?.value}`,
-        },
-        withCredentials: true,
-      }
-    );
+    const response = await fetch(`api/delivery/my_deliveries`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+    const data = await response.json();
     if (response.status === 200) {
-      deliveries = response.data["deliveries"];
+      deliveries = data["deliveries"];
     }
   } catch {
     deliveries = [];
@@ -72,8 +62,8 @@ export default async function MyDeliveries() {
         <p>You don&apos;t have deliveries yet</p>
       )}
       <div className="mt-4">
-        <Link href="/delivery/create" className="btn btn-primary">Add new delivery</Link>
-        <Link href="/book/catalog" className="btn btn-secondary">Return to catalog</Link>
+        <Link href={ROUTES.CREATE_DELIVERY} className="btn btn-primary">Add new delivery</Link>
+        <Link href={ROUTES.CATALOG} className="btn btn-secondary">Return to catalog</Link>
       </div>
     </div>
   );
