@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
+import PurchaseForm from "@/app/components/forms/PurchaseForm";
 
 export const metadata: Metadata = {
   title: "Catalog",
@@ -81,6 +82,12 @@ export default async function Catalog() {
                 <p className="card-text">{book.description}</p>
                 <p className="card-text"><strong>Price:</strong> ${book.price.toFixed(2)}</p>
                 <p className="card-text"><strong>Stock:</strong> {book.stock}</p>
+                
+                <PurchaseForm 
+                  bookId={book.id}
+                  price={book.price}
+                  stock={book.stock}
+                />
               </div>
             </div>
           </div>

@@ -14,7 +14,8 @@ def buy(book_id):
 
     purchase_service = injector.get(PurchaseServiceInterface)
     new_purchase = purchase_service.buy_book(current_user.id, book_id, quantity, price)
+    amount = price * quantity
 
-    return redirect(url_for('payment.payment_page', purchase_id=new_purchase.id))
+    return jsonify({"message": "Purchase created successfully", "purchase_id": new_purchase.id, "amount": amount})
     # schema = PurchaseSchema()
     # return jsonify(schema.dump(new_purchase)), 201 

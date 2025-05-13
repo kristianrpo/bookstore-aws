@@ -15,3 +15,6 @@ class PurchaseService(PurchaseServiceInterface):
         purchase = self.purchase_repository.create_purchase(user_id, book_id, quantity, total_price, 'Pending Payment')
         db.session.commit()
         return purchase
+
+    def get_purchase_by_id(self, purchase_id: int):
+        return self.purchase_repository.get_purchase_by_id(purchase_id)

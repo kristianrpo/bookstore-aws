@@ -20,3 +20,8 @@ class PurchaseRepositoryInterface(ABC):
     def update_status(self, purchase_id, status):
         """Updates the status of a purchase."""
         pass
+
+    @abstractmethod
+    def get_purchase_by_id(self, purchase_id: int):
+        """Gets a purchase by ID or raises 404."""
+        pass
