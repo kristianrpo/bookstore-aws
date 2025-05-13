@@ -2,6 +2,7 @@ from flask import Flask
 from app.settings.extensions import db, login_manager
 from app.settings.config import Config, UPLOAD_FOLDER
 from app.interface_adapters.controllers.authentication_controller import auth
+from app.interface_adapters.controllers.admin_controller import admin
 from app.database.entities.user import User
 from flask_cors import CORS
 import os
@@ -21,5 +22,6 @@ def create_app():
         return User.query.get(int(user_id))
     
     app.register_blueprint(auth)
+    app.register_blueprint(admin)
 
     return app

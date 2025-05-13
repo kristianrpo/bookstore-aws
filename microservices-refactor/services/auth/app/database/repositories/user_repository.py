@@ -17,3 +17,5 @@ class UserRepository(UserRepositoryInterface):
     def get_by_email(self, email: str):
         return User.query.filter_by(email=email).first()
     
+    def get_all(self):
+        return User.query.all()

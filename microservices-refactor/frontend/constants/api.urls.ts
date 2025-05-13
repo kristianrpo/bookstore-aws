@@ -9,6 +9,9 @@ const ROUTES_API = {
     REGISTER: `${BASE_URL_SERVICE_AUTH}/register`,
     GET_USER: `${BASE_URL_SERVICE_AUTH}/user`
   },
+  ADMIN: {
+    USERS: `${BASE_URL_SERVICE_AUTH}/admin/users`
+  },
   BOOK:{
     CATALOG: `${BASE_URL_SERVICE_BOOK}/book/catalog`,
     MY_BOOKS: `${BASE_URL_SERVICE_BOOK}/book/my_books`,

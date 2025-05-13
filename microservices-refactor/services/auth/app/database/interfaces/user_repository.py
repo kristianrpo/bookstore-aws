@@ -12,3 +12,7 @@ class UserRepositoryInterface(ABC):
         pass
 
     
+    @abstractmethod
+    def get_all(self):
+        """Return all users"""
+        pass
