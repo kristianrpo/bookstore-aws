@@ -13,7 +13,7 @@ export default function Navbar() {
   useEffect(() => {
     const checkAuthentication = async () => {
       try {
-        const response = await axios.get('/api/auth/user', { withCredentials: true });
+        const response = await axios.get('/objective-3/api/auth/user', { withCredentials: true });
         if (response.status === 200) {
           setIsAuthenticated(true);
           setName(response.data.name);
@@ -30,12 +30,12 @@ export default function Navbar() {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get('/api/auth/logout', { withCredentials: true });
+      const response = await axios.get('/objective-3/api/auth/logout', { withCredentials: true });
 
       if (response.status === 200) {
         setIsAuthenticated(false);
         setName('');
-        router.push('/login');
+        router.push(ROUTES.LOGIN);
       }
     } catch {
       console.error('Logout failed');

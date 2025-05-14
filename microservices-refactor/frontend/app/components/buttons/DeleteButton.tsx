@@ -12,7 +12,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ bookId }) => {
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete this book?')) {
       try {
-        const response = await fetch(`/api/book/delete-book/${bookId}`, {
+        const response = await fetch(`/objective-3/api/book/delete-book/${bookId}`, {
           method: 'DELETE',
           credentials: 'include',
         });

@@ -19,7 +19,7 @@ export default function MyDeliveries() {
   useEffect(() => {
     const fetchDeliveries = async () => {
       try {
-        const response = await fetch("/api/order/my-deliveries", {
+        const response = await fetch("/objective-3/api/order/my-deliveries", {
           method: "GET",
           credentials: "include",
         });

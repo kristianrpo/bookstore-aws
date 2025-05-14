@@ -26,7 +26,7 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
     const fetchProviders = async () => {
       try {
         const response = await fetch(
-          `/api/order/select-delivery/${purchaseId}`, {
+          `/objective-3/api/order/select-delivery/${purchaseId}`, {
             method: 'GET',
             credentials: 'include',
           });
@@ -53,7 +53,7 @@ export default function DeliveryForm({ purchaseId }: DeliveryFormProps) {
       formData.append('provider', selectedProvider);
 
       const response = await fetch(
-        `/api/order/select-delivery/${purchaseId}`, {
+        `/objective-3/api/order/select-delivery/${purchaseId}`, {
           method: 'POST',
           body: formData,
           credentials: 'include',

@@ -1,53 +1,80 @@
-version: '3.8'
+ersion: '3.8'
 services:
   frontend:
-    build: ./frontend
-    restart: always
-    env_file:
-      - .env
+    image: kristianrpo30/frontend:latest
     ports:
       - "4000:4000"
-    volumes:
-      - /mnt/nfs:/mnt/nfs
     networks:
       - project-2
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
+
 
   auth:
-    build: ./services/auth
-    restart: always
-    env_file:
-      - .env
+    image: kristianrpo30/authentication:latest
     ports:
       - "5000:5000"
-    volumes:
-      - /mnt/nfs:/mnt/nfs
     networks:
       - project-2
+    env_file:
+      - .env
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
 
   book:
-    build: ./services/book
-    restart: always
-    env_file:
-      - .env
+    image: kristianrpo30/book:latest
     ports:
       - "5001:5001"
-    volumes:
-      - /mnt/nfs:/mnt/nfs
     networks:
       - project-2
-
-  order:
-    build: ./services/order
-    restart: always
     env_file:
       - .env
-    ports:
-      - "5002:5002"
     volumes:
       - /mnt/nfs:/mnt/nfs
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
+    
+  order:
+    image: kristianrpo30/order:latest
+    ports:
+      - "5002:5002"
     networks:
       - project-2
+    env_file:
+      - .env
+    volumes:
+      - /mnt/nfs:/mnt/nfs
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == worker
 
 networks:
   project-2:
-    driver: bridge
+    driver: overlay

@@ -43,7 +43,7 @@ export default function EditBookForm({id, book}: EditBookFormProps) {
     }
 
     try {
-      const response = await fetch(`/api/book/edit-book/${id}`, {
+      const response = await fetch(`/objective-3/api/book/edit-book/${id}`, {
         method: 'PATCH',
         body: formData,
         credentials: 'include',
@@ -138,7 +138,7 @@ export default function EditBookForm({id, book}: EditBookFormProps) {
             {currentImagePath && (
                 <div className="mb-2">
                 <img
-                    src={`/api/book/image/${book.image_path.split('/').pop()}`}
+                    src={`/objective-3/api/book/image/${book.image_path.split('/').pop()}`}
                     alt="Current Book Image"
                     className="img-thumbnail"
                     style={{ maxWidth: '200px' }}

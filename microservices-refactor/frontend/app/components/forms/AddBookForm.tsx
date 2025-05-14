@@ -28,7 +28,7 @@ export default function AddBookForm() {
     }
 
     try {
-      const response = await fetch('/api/book/add-book', {
+      const response = await fetch('/objective-3/api/book/add-book', {
         method: 'POST',
         body: formData,
         credentials: 'include',

@@ -23,7 +23,7 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        '/api/auth/login', 
+        '/objective-3/api/auth/login', 
         { email, password }
       );
 

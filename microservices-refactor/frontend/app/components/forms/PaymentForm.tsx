@@ -19,7 +19,7 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
   const getPaymentMethods = useCallback(async () => {
     try {
       const response = await fetch(
-        `/api/order/select-payment/${purchaseId}`, {
+        `/objective-3/api/order/select-payment/${purchaseId}`, {
           method: 'GET',
           credentials: 'include',
         });
@@ -46,7 +46,7 @@ export default function PaymentForm({ purchaseId, amount }: PaymentFormProps) {
     }
 
     try {
-      const response = await fetch(`/api/order/select-payment/${purchaseId}`, {
+      const response = await fetch(`/objective-3/api/order/select-payment/${purchaseId}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

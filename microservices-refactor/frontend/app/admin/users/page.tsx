@@ -13,7 +13,7 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    axios.get('/api/admin/users')
+    axios.get('/objective-3/api/admin/users')
       .then(res => setUsers(res.data))
       .catch(err => console.error(err));
   }, []);

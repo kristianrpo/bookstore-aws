@@ -23,7 +23,7 @@ export default function CreateDelivery() {
     }
 
     try {
-      const response = await fetch('/api/order/create-delivery', {
+      const response = await fetch('/objective-3/api/order/create-delivery', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

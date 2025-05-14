@@ -20,7 +20,7 @@ export default function PurchaseForm({ bookId, price, stock }: PurchaseFormProps
     setIsLoading(true);
 
     try {
-      const response = await fetch(`/api/order/purchase/${bookId}`, {
+      const response = await fetch(`/objective-3/api/order/purchase/${bookId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

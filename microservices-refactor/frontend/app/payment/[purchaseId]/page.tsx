@@ -11,7 +11,7 @@ export default function PaymentPage({ params }: { params: Promise<{ purchaseId: 
   useEffect(() => {
     const fetchPurchaseDetails = async () => {
       try {
-        const response = await fetch(`/api/order/select-payment/${purchaseId}`, {
+        const response = await fetch(`/objective-3/api/order/select-payment/${purchaseId}`, {
           method: 'GET',
           credentials: 'include',
         });

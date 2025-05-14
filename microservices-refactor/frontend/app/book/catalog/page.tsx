@@ -25,7 +25,7 @@ export default async function Catalog() {
 
   try {
     const response = await axios.get<Book[]>(
-      `${process.env.NEXT_PUBLIC_URL!}/api/book/catalog`,
+      `https://www.telematics-projects.space/objective-3/api/book/catalog`,
       {
         headers: {
           Cookie: `session=${sessionCookie?.value}`,
@@ -53,7 +53,7 @@ export default async function Catalog() {
               <div style={{ position: 'relative', height: '200px' }}>
                 {book.image_path ? (
                   <img
-                    src={`/api/book/image/${book.image_path.split('/').pop()}`}
+                    src={`/objective-3/api/book/image/${book.image_path.split('/').pop()}`}
                     alt={book.title}
                     style={{
                       objectFit: 'cover',

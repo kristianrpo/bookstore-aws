@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import ROUTES from '@/constants/urls';
 
 const nextConfig: NextConfig = {
+  assetPrefix: '/objective-3',
   async rewrites() {
     return [
       {

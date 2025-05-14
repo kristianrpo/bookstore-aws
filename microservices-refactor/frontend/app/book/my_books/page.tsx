@@ -37,7 +37,7 @@ export default async function MyBooks() {
 
   try {
     const response = await axios.get<Book[]>(
-      `${process.env.NEXT_PUBLIC_URL!}/api/book/my-books`,
+      `https://www.telematics-projects.space/objective-3/api/book/my-books`,
       {
         headers: {
           Cookie: `session=${sessionCookie?.value}`,

@@ -16,7 +16,7 @@ export default function RegisterForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        '/api/auth/register',
+        '/objective-3/api/auth/register',
         { name, email, password },
         {
           withCredentials: true,
