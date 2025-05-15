@@ -31,6 +31,14 @@ Access the deployed platform and its objectives via the domain:
 
 ---
 
+## Presentation Overview
+
+To gain a clearer understanding of the **Bookstore-AWS** project’s architecture, deployment, and design decisions, please watch our detailed explanatory video:
+
+[Explanatory Video on Bookstore-AWS Architecture and Deployment](https://www.canva.com/design/DAGneTB0xeE/vm7hbENcRCPESWbQHklIVw/watch?utm_content=DAGneTB0xeE&utm_campaign=share_your_design&utm_medium=link2&utm_source=shareyourdesignpanel)
+
+---
+
 ## Contributors
 
 - Sara Cortes (svcortesm@eafit.edu.co)  
